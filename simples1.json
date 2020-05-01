@@ -1,0 +1,21 @@
+{
+  "randoms": 100000,
+  "queues":
+  [
+    {
+      "label": "Q1",
+      "capacity": 5,
+      "servers": 1,
+      "min_arrival": 2.0,
+      "max_arrival": 4.0,
+      "min_service": 3.0,
+      "max_service": 5.0
+    }
+  ],
+  "first_entry":
+  {
+    "queue": "Q1",
+    "time": 3.0
+  },
+  "network": []
+}

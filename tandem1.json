@@ -1,0 +1,35 @@
+{
+  "randoms": 100000,
+  "queues":
+  [
+    {
+      "label": "Q1",
+      "capacity": 3,
+      "servers": 2,
+      "min_arrival": 2.0,
+      "max_arrival": 3.0,
+      "min_service": 2.0,
+      "max_service": 5.0
+    },
+    {
+      "label": "Q2",
+      "capacity": 3,
+      "servers": 1,
+      "min_service": 3.0,
+      "max_service": 5.0
+    }
+  ],
+  "first_entry":
+  {
+    "queue": "Q1",
+    "time": 2.5
+  },
+  "network":
+  [
+    {
+      "source": "Q1",
+      "destination": "Q2",
+      "probability": 1.0
+    }
+  ]
+}
