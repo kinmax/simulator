@@ -1,10 +1,13 @@
+# This class is a pseudo-random numbers generator
 class PseudoRandomGenerator
+
+    # generates the list of pseudo-random numbers
     def initialize(numbers=100000)
-        if numbers.is_a?(Integer)
+        if numbers.is_a?(Integer) # if user provided the number of randoms, generate them using linear congruent method
             m = 2**32
             a = 1664525
             c = 1013904223
-            x0 = Time.now.to_i
+            x0 = Time.now.to_i # uses current timestamp as seed
             n = numbers
         
             numbers = Array.new(n+1)
@@ -19,12 +22,13 @@ class PseudoRandomGenerator
                 end
             end
             @index = 0
-        else
+        else # if user provided a list of numbers, use it
             @normalized_numbers = numbers
             @index = 0
         end       
     end
 
+    # returns next number on the list and increases index to prepare for next
     def next        
         if @index == @normalized_numbers.length
             raise OutOfRandomsError
@@ -35,10 +39,12 @@ class PseudoRandomGenerator
         end
     end
 
+    # gets next number in a given range (a..b)
     def next_in_range(a, b)
         ((b - a).to_f.round(4) * self.next + a.to_f.round(4)).round(4)
     end
 
+    # returns the next number without altering index
     def see_next
         if @index == @normalized_numbers.length
             return -1

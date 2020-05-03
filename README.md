@@ -2,7 +2,7 @@
 
 Este simulador é capaz de realizar simulações de filas simples. Ele foi desenvolvido por Kin Max Piamolini Gusmão como tarefa do Módulo 3 da disciplina de Simulação e Métodos Analíticos do 7º semestre do curso de Bacharelado em Ciência da Computação da Escola Politécnica da Pontifícia Universidade Universidade Católica do Rio Grande do Sul, ministrada pelo Prof. Dr. Afonso Henrique Corrêa Sales no período de 2020/1.
 
-## Pré-Requisito
+## Pré-Requisitos
 
 Este simulador foi descrito na linguagem de programação Ruby na versão 2.5.1. Por isso, para se utilizar o simulador, é necessário primeiramente ter o ambiente de desenvolvimento Ruby instalado em sua máquina.
 
@@ -10,13 +10,17 @@ Este simulador foi descrito na linguagem de programação Ruby na versão 2.5.1.
 
 Para o caso de sistemas Linux executando distribuições Ubuntu ou Debian, o Ruby pode ser instalado através do gerenciador de pacotes ```apt-get```, com o seguinte comando:
 
-```$ sudo apt-get install ruby-full```
+```
+$ sudo apt-get install ruby-full
+```
 
 ### Sistemas Mac OS X e macOS
 
 Para sistemas Mac OS X ou macOS, pode ser utilizado o gerenciador de pacotes Homebrew, da seguinte forma:
 
-```$ brew install ruby```
+```
+$ brew install ruby
+```
 
 ### Sistemas Windows
 
@@ -29,6 +33,16 @@ https://rubyinstaller.org/
 Para outros sistemas operacionais não listados aqui, o método de instalação pode ser encontrado em:
 
 https://www.ruby-lang.org/pt/documentation/installation/
+
+### Instalação da Gema JSON
+
+Talvez seja necessária a instalação da *gem* JSON para Ruby. A instalação deve ser feita após a instalação correta do Ruby. A gema pode ser instalada com o seguinte comando:
+
+```
+gem install json
+```
+
+Talvez seja necessário utilizar a definição de super-usuário para tanto.
 
 ## Entrada
 

@@ -10,12 +10,16 @@ config = JSON.parse(raw_config)
 avgs = []
 avg_losses = []
 qs = []
+
+# set number of executions based on optional parameter
 number_of_executions = config["executions"]
 number_of_executions = 1 unless !number_of_executions.nil? && number_of_executions.is_a?(Integer)
 number_of_executions = 1 if number_of_executions <= 0
+
+# repeats according to number of executions
 number_of_executions.times do  |index|
-    random = PseudoRandomGenerator.new(config["randoms"])
-    scheduler = Scheduler.new
+    random = PseudoRandomGenerator.new(config["randoms"]) # creates new pseudo-random generator (new seed)
+    scheduler = Scheduler.new # creates new scheduler
     queues = []
     config["queues"].each do |item|
         queues << SimQueue.new(item["label"], 
@@ -24,39 +28,46 @@ number_of_executions.times do  |index|
                             item["min_arrival"], 
                             item["max_arrival"], 
                             item["min_service"], 
-                            item["max_service"])
+                            item["max_service"]) # creates queues
     end
     qs = queues
     if index == 0
         queues.each do |q|
             avgs << []
-            avg_losses << 0.to_f
+            avg_losses << 0.to_f # initializes average losses for each queue
         end
     end
     net = []
+
+    # create connections to be added to network
     config["network"].each do |item|
         source = queues.select { |q| q.label == item["source"] }.first
         destination = queues.select { |q| q.label == item["destination"] }.first
         net << Connection.new(source, destination, item["probability"])
     end
-    network = Network.new(net)
+
+    network = Network.new(net) # create network with connections
     queue_controller = QueueController.new(config["first_entry"]["time"],
                                            queues.select { |q| q.label == config["first_entry"]["queue"] }.first,
                                            queues,
                                            network,
                                            random,
-                                           scheduler)
+                                           scheduler) # create queue controller
 
+    # keep treating events until no randoms are available
     ret = true
     while ret
         ret = queue_controller.treat_event(scheduler.next_event) 
     end
+    
+    # add stats and losses to average count
     queues.each_with_index do |q, i|
         avgs[i] << q.stats.map { |e| e.nil? ? 0.to_f : e }
         avg_losses[i] += q.losses
     end
 end
 
+# calculate average stats
 final = []
 avgs.each_with_index do |q, i|
     final[i] = q.transpose.map {|x| x.reduce(:+)}
@@ -65,11 +76,13 @@ avgs.each_with_index do |q, i|
     end
 end
 
+# calculate average losses
 final_losses = []
 avg_losses.each do |q|
     final_losses << (q.to_f/number_of_executions.to_f).round(4)
 end
 
+# final output
 puts "Results:\n\n"
 
 qs.each_with_index do |q, i|
@@ -84,5 +97,5 @@ qs.each_with_index do |q, i|
 end
 
 end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-elapsed = end_time - start_time
+elapsed = end_time - start_time # get real elapsed time
 puts "\nSimulation Real Elapsed Time: #{elapsed.round(4)} seconds"
