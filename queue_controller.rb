@@ -60,7 +60,7 @@ class QueueController
         queues.each do |q|
             q.register_stat(q.state, event.time - @current_time) # register stat for all queues
         end
-        q = queues.select { |q| event.queue.label == q.label }.first
+        q = event.queue
         @current_time = event.time
         @current_event = event
         q.register_exit # register exit
@@ -81,7 +81,6 @@ class QueueController
         queues.each do |q|
             q.register_stat(q.state, event.time - @current_time) # register stat for all queues
         end
-        q = queues.select { |q| event.queue.label == q.label }.first
         @current_time = event.time
         @current_event = event
         src.register_exit
@@ -124,7 +123,6 @@ class QueueController
         connections = cons + [exit_con] # exit is added to connections list
         connections.sort_by!(&:prob) # sorts connections by probability
         connections.reverse! # reverses array to get connections by probability in descending order
-        connection = nil
         connections.each do |c|
             if r < c.prob
                 return nil if c.src.nil? # if connection is exit, return nil

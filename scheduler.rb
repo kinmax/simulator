@@ -8,7 +8,7 @@ class Scheduler
     # schedules a new event
     # receives the event type, event time, queue related and connection related (if any)
     # returns new event
-    def schedule(event_type, time, queue, connection=nil)
+    def schedule(event_type, time, queue=nil, connection=nil)
         new_event = Event.new(@events.length+1, event_type, time, queue, connection) # adds id to event as well
         @events << new_event
         @events.sort_by!{ |event| event.time } # sorts events by time, to always get the next event
