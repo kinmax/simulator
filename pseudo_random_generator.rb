@@ -1,23 +1,28 @@
 class PseudoRandomGenerator
     def initialize(numbers=100000)
-        m = 2**32
-        a = 1664525
-        c = 1013904223
-        x0 = Time.now.to_i
-        n = numbers
-    
-        numbers = Array.new(n+1)
-        @normalized_numbers = Array.new(n)
-    
-        numbers.each_with_index do |num, index|
-            if index == 0
-                numbers[index] = x0
-            else
-                numbers[index] = (a * numbers[index-1] + c)%m
-                @normalized_numbers[index-1] = numbers[index].to_f/m.to_f
+        if numbers.is_a?(Integer)
+            m = 2**32
+            a = 1664525
+            c = 1013904223
+            x0 = Time.now.to_i
+            n = numbers
+        
+            numbers = Array.new(n+1)
+            @normalized_numbers = Array.new(n)
+        
+            numbers.each_with_index do |num, index|
+                if index == 0
+                    numbers[index] = x0
+                else
+                    numbers[index] = (a * numbers[index-1] + c)%m
+                    @normalized_numbers[index-1] = numbers[index].to_f/m.to_f
+                end
             end
-        end
-        @index = 0
+            @index = 0
+        else
+            @normalized_numbers = numbers
+            @index = 0
+        end       
     end
 
     def next        

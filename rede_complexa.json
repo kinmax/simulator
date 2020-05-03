@@ -1,0 +1,64 @@
+{
+    "executions": 1,
+    "randoms": 100000,
+    "queues":
+    [
+      {
+        "label": "F1",
+        "capacity": null,
+        "servers": 1,
+        "min_arrival": 1.0,
+        "max_arrival": 4.0,
+        "min_service": 1.0,
+        "max_service": 1.5
+      },
+      {
+        "label": "F2",
+        "capacity": 5,
+        "servers": 3,
+        "min_service": 5.0,
+        "max_service": 10.0
+      },
+      {
+        "label": "F3",
+        "capacity": 8,
+        "servers": 2,
+        "min_service": 10.0,
+        "max_service": 20.0
+      }
+    ],
+    "first_entry":
+    {
+      "queue": "F1",
+      "time": 1.0
+    },
+    "network":
+    [
+      {
+        "source": "F1",
+        "destination": "F2",
+        "probability": 0.8
+      },
+      {
+        "source": "F1",
+        "destination": "F3",
+        "probability": 0.2
+      },
+      {
+        "source": "F2",
+        "destination": "F1",
+        "probability": 0.3
+      },
+      {
+        "source": "F2",
+        "destination": "F3",
+        "probability": 0.5
+      },
+      {
+        "source": "F3",
+        "destination": "F2",
+        "probability": 0.7
+      }
+    ]
+  }
+  

@@ -3,7 +3,7 @@ class SimQueue
 
     def initialize(label, capacity, servers, min_arrival=nil, max_arrival=nil, min_service, max_service)
         @label = label
-        @capacity = capacity
+        @capacity = capacity || Float::INFINITY
         @servers = servers
         @min_arrival = min_arrival
         @max_arrival = max_arrival
@@ -12,9 +12,6 @@ class SimQueue
         @state = 0
         @losses = 0
         @stats = []
-        (@capacity+1).times do |i|
-            @stats[i] = 0.to_f
-        end
     end
 
     def register_entry
@@ -38,6 +35,7 @@ class SimQueue
     end
 
     def register_stat(state, time)
+        @stats[state] = 0.to_f if @stats[state].nil?
         @stats[state] += time
     end
 end

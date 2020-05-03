@@ -10,7 +10,10 @@ config = JSON.parse(raw_config)
 avgs = []
 avg_losses = []
 qs = []
-5.times do  |index|
+number_of_executions = config["executions"]
+number_of_executions = 1 unless !number_of_executions.nil? && number_of_executions.is_a?(Integer)
+number_of_executions = 1 if number_of_executions <= 0
+number_of_executions.times do  |index|
     random = PseudoRandomGenerator.new(config["randoms"])
     scheduler = Scheduler.new
     queues = []
@@ -49,7 +52,7 @@ qs = []
         ret = queue_controller.treat_event(scheduler.next_event) 
     end
     queues.each_with_index do |q, i|
-        avgs[i] << q.stats
+        avgs[i] << q.stats.map { |e| e.nil? ? 0.to_f : e }
         avg_losses[i] += q.losses
     end
 end
@@ -58,13 +61,13 @@ final = []
 avgs.each_with_index do |q, i|
     final[i] = q.transpose.map {|x| x.reduce(:+)}
     final[i].each_with_index do |f, index|
-        final[i][index] = (f.to_f/5.to_f).round(4)
+        final[i][index] = (f.to_f/number_of_executions.to_f).round(4)
     end
 end
 
 final_losses = []
 avg_losses.each do |q|
-    final_losses << (q.to_f/5.to_f).round(4)
+    final_losses << (q.to_f/number_of_executions.to_f).round(4)
 end
 
 puts "Results:\n\n"
@@ -82,4 +85,4 @@ end
 
 end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 elapsed = end_time - start_time
-puts "\nSimulation Time: #{elapsed.round(4)} seconds"
+puts "\nSimulation Real Elapsed Time: #{elapsed.round(4)} seconds"

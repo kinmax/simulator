@@ -1,0 +1,54 @@
+{
+    "executions": 1,
+    "randoms": [
+        0.2176,
+        0.0103,
+        0.1109,
+        0.3456,
+        0.991,
+        0.2323,
+        0.9211,
+        0.0322,
+        0.1211,
+        0.5131,
+        0.7208,
+        0.9172,
+        0.9922,
+        0.8324,
+        0.5011,
+        0.2931
+    ],
+    "queues":
+    [
+      {
+        "label": "Q1",
+        "capacity": 4,
+        "servers": 2,
+        "min_arrival": 2.0,
+        "max_arrival": 3.0,
+        "min_service": 4.0,
+        "max_service": 7.0
+      },
+      {
+        "label": "Q2",
+        "capacity": null,
+        "servers": 1,
+        "min_service": 4.0,
+        "max_service": 8.0
+      }
+    ],
+    "first_entry":
+    {
+      "queue": "Q1",
+      "time": 3.0
+    },
+    "network":
+    [
+      {
+        "source": "Q1",
+        "destination": "Q2",
+        "probability": 0.7
+      }
+    ]
+  }
+  

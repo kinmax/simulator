@@ -1,4 +1,3 @@
-require "byebug"
 class Event
     attr_accessor :treated
     attr_reader :id, :type, :time, :queue, :src, :dst, :connection
@@ -17,11 +16,6 @@ class Event
         else
             raise ArgumentError, "An invalid event type was passed for event id #{id}: #{type}. Valid event types: #{VALID_TYPES}"
         end
-    end
-
-    def deep_clone
-        clone = Event.new(@id.clone, @type.clone, @time.clone, @queue.clone, @connection.clone, @treated.clone)
-        return clone
     end
 
     def check_queue_params(type, queue, connection)
