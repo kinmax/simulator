@@ -120,14 +120,16 @@ class QueueController
         return nil if exit_con.prob == 1.0 # if 100% prob to exit queue, return nil
         r = @random.next # uses a new random to see probability
         raise OutOfRandomsError if @random.see_next < 0
-        connections = cons + [exit_con] # exit is added to connections list
+        connections = exit_con.prob > 0.to_f ? cons + [exit_con] : cons + [] # exit is added to connections list
         connections.sort_by!(&:prob) # sorts connections by probability
         connections.reverse! # reverses array to get connections by probability in descending order
+        cumulative = 0.to_f
         connections.each do |c|
-            if r < c.prob
+            if r >= cumulative && r < (cumulative + c.prob)
                 return nil if c.src.nil? # if connection is exit, return nil
                 return c # else return the connection
             end
+            cumulative += c.prob
         end
         return nil if connections.last.src.nil? # if connection is exit, return nil
         return connections.last # else return the connection

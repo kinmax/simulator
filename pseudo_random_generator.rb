@@ -41,15 +41,15 @@ class PseudoRandomGenerator
 
     # gets next number in a given range (a..b)
     def next_in_range(a, b)
-        ((b - a).to_f.round(4) * self.next + a.to_f.round(4)).round(4)
+        ((b - a).to_f * self.next + a.to_f)
     end
 
     # returns the next number without altering index
     def see_next
-        if @index == @normalized_numbers.length
+        if @index >= @normalized_numbers.length
             return -1
         else
-            return @normalized_numbers[@index].round(4)
+            return @normalized_numbers[@index]
         end
     end
 end

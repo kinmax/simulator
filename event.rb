@@ -9,7 +9,7 @@ class Event
         if VALID_TYPES.include?(type)
             @id = id # unique id for event
             @type = type # type of event (entry, transfer or exit)
-            @time = time.round(4) # time of event
+            @time = time # time of event
             @treated = false # flag that says if event was treated or not
             @queue = queue # queue that called the event
             @connection = connection # connection that called the event
@@ -34,5 +34,9 @@ class Event
                 raise ArgumentError, "Event type is #{type} but connection is nil or queue is nil"
             end
         end
+    end
+
+    def to_s
+        return "Event #{@id}\nType: #{@type}\nTime: #{@time}\nQueue #{@queue.label}\nConnection: \n#{@connection}"
     end
 end

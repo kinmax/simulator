@@ -7,4 +7,8 @@ class Connection
         @dst = dst # destination queue
         @prob = prob # routing probability
     end
+
+    def to_s
+        "Source: #{@src&.label}\nDestination: #{@dst&.label}\nProbability: #{@prob}\n"
+    end
 end
