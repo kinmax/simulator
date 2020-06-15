@@ -96,6 +96,31 @@ qs.each_with_index do |q, i|
     puts "\nAverage Losses: #{final_losses[i]}\n\n"
 end
 
+# Performance Indicators
+
+puts "###########################################################"
+puts "Performance Indicators"
+
+qs.each_with_index do |q, i|
+    mu = 1.to_f/((q.min_service + q.max_service)/2.to_f)
+    puts "Queue #{q.label}"
+    indicator_n = 0.to_f
+    indicator_d = 0.to_f
+    indicator_u = 0.to_f
+    indicator_w = 0.to_f
+    final[i].each_with_index do |stat, index|
+        indicator_n += (stat/(final[i].sum)) * index
+        indicator_d += (stat/(final[i].sum)) * mu*([q.servers, index].min)
+        indicator_u += (stat/(final[i].sum)) * (([q.servers, index].min)/q.servers)
+    end
+    indicator_w = indicator_n/indicator_d
+    puts "N = #{indicator_n}"
+    puts "D = #{indicator_d}"
+    puts "U = #{indicator_u}"
+    puts "W = #{indicator_w}"
+    puts "#########################################################"
+end
+
 end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 elapsed = end_time - start_time # get real elapsed time
 puts "\nSimulation Real Elapsed Time: #{elapsed.round(4)} seconds"

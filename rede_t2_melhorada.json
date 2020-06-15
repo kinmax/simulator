@@ -1,0 +1,59 @@
+{
+    "executions": 5,
+    "randoms": 100000,
+    "queues":
+    [
+      {
+        "label": "ING",
+        "capacity": 15,
+        "servers": 2,
+        "min_arrival": 0.8,
+        "max_arrival": 2.4,
+        "min_service": 2.0,
+        "max_service": 5.0
+      },
+      {
+        "label": "PIP",
+        "capacity": 5,
+        "servers": 3,
+        "min_service": 3.0,
+        "max_service": 6.0
+      },
+      {
+        "label": "FIL",
+        "capacity": null,
+        "servers": 1,
+        "min_service": 0.5,
+        "max_service": 1.0
+      }
+    ],
+    "first_entry":
+    {
+      "queue": "ING",
+      "time": 1.0
+    },
+    "network":
+    [
+      {
+        "source": "ING",
+        "destination": "PIP",
+        "probability": 0.7
+      },
+      {
+        "source": "ING",
+        "destination": "FIL",
+        "probability": 0.3
+      },
+      {
+        "source": "PIP",
+        "destination": "FIL",
+        "probability": 0.98
+      },
+      {
+        "source": "FIL",
+        "destination": "ING",
+        "probability": 0.2
+      }
+    ]
+  }
+  
