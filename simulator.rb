@@ -70,6 +70,15 @@ end
 # calculate average stats
 final = []
 avgs.each_with_index do |q, i|
+    max = 0
+    q.each do |x|
+        max = x.length if x.length > max
+    end
+    q.each do |x|
+        while x.length < max do
+            x << 0.to_f
+        end
+    end
     final[i] = q.transpose.map {|x| x.reduce(:+)}
     final[i].each_with_index do |f, index|
         final[i][index] = (f.to_f/number_of_executions.to_f).round(4)
